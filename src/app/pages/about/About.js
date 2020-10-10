@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect} from "react";
 import ClientSocket from "../../../util/client.socket";
 
 export default function About() {

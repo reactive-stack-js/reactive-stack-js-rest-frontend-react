@@ -6,10 +6,10 @@ const loremConfigUpdate = (config) => {
 	if (!config) config = _initialConfig();
 
 	ClientSocket.send({
-		type: 'subscribe',
-		target: 'lorem',
-		observe: 'lorems',
-		scope: 'one',
+		type: "subscribe",
+		target: "lorem",
+		observe: "lorems",
+		scope: "one",
 		config: {
 			query: config
 		}

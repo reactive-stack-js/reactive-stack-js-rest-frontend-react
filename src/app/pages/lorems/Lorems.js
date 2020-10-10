@@ -1,11 +1,11 @@
 import _ from "lodash";
-import React, {useState, useEffect} from 'react';
-import {connect, useSelector} from 'react-redux';
+import React, {useState, useEffect} from "react";
+import {connect, useSelector} from "react-redux";
 
 import AuthService from "../../../util/auth.service";
 import loremsConfigUpdate from "./_store/_f.lorems.config.update";
 
-import './Lorems.css';
+import "./Lorems.css";
 import LoremsRows from "./Rows";
 import Preview from "./preview/Preview";
 import ClientSocket from "../../../util/client.socket";
@@ -36,7 +36,7 @@ const Lorems = () => {
 
 	const [page, _setPage] = useState(1);
 	const [pageSize, _setPageSize] = useState(10);
-	const [search, _setSearch] = useState('');
+	const [search, _setSearch] = useState("");
 	const [sort, _setSort] = useState({createdAt: -1});
 
 	const setPage = (page) => {
@@ -73,17 +73,17 @@ const Lorems = () => {
 
 	const toggleSorting = async (label) => {
 		let sorting = _.cloneDeep(sort);
-		if (label === 'firstname') {
-			sorting = _toggleSortingHelper(sorting, 'firstname');
-			sorting = _toggleSortingHelper(sorting, 'lastname');
+		if (label === "firstname") {
+			sorting = _toggleSortingHelper(sorting, "firstname");
+			sorting = _toggleSortingHelper(sorting, "lastname");
 		} else {
 			sorting = _toggleSortingHelper(sorting, label);
 		}
 
-		if (sorting['createdAt']) {
-			let createdAt = sorting['createdAt'];
-			delete sorting['createdAt'];
-			sorting['createdAt'] = createdAt;
+		if (sorting["createdAt"]) {
+			let createdAt = sorting["createdAt"];
+			delete sorting["createdAt"];
+			sorting["createdAt"] = createdAt;
 		}
 		sorting = _.pickBy(sorting, _.identity);
 		await setSort(sorting);
@@ -93,11 +93,11 @@ const Lorems = () => {
 		if (sort) {
 			let sortingLabel = _.get(sort, label, false);
 			if (sortingLabel) {
-				if (sortingLabel < 0) return 'fa fa-long-arrow-down';
-				if (sortingLabel > 0) return 'fa fa-long-arrow-up';
+				if (sortingLabel < 0) return "fa fa-long-arrow-down";
+				if (sortingLabel > 0) return "fa fa-long-arrow-up";
 			}
 		}
-		return '';
+		return "";
 	};
 
 	const store = useSelector(store => store);
@@ -131,7 +131,7 @@ const Lorems = () => {
 				&nbsp;
 				<input type="text" name="search" value={search} onChange={(event) => setSearch(event.target.value)}/>
 				&nbsp;
-				<button disabled={_.isEmpty(search)} onClick={() => setSearch('')}>x</button>
+				<button disabled={_.isEmpty(search)} onClick={() => setSearch("")}>x</button>
 			</div>
 		);
 	};
@@ -149,29 +149,29 @@ const Lorems = () => {
 					<thead>
 					<tr>
 						<th align="left">#</th>
-						<th align="left" onClick={() => toggleSorting('iteration')} className="nowrap">
-							V. <i className={getIcon('iteration')}/>
+						<th align="left" onClick={() => toggleSorting("iteration")} className="nowrap">
+							V. <i className={getIcon("iteration")}/>
 						</th>
-						<th align="left" onClick={() => toggleSorting('firstname')} className="nowrap">
-							Name <i className={getIcon('firstname')}/>
+						<th align="left" onClick={() => toggleSorting("firstname")} className="nowrap">
+							Name <i className={getIcon("firstname")}/>
 						</th>
-						<th align="left" onClick={() => toggleSorting('username')} className="nowrap">
-							Username <i className={getIcon('username')}/>
+						<th align="left" onClick={() => toggleSorting("username")} className="nowrap">
+							Username <i className={getIcon("username")}/>
 						</th>
-						<th align="left" onClick={() => toggleSorting('email')} className="nowrap">
-							Email <i className={getIcon('email')}/>
+						<th align="left" onClick={() => toggleSorting("email")} className="nowrap">
+							Email <i className={getIcon("email")}/>
 						</th>
-						<th align="left" onClick={() => toggleSorting('rating')} className="nowrap">
-							Rating <i className={getIcon('rating')}/>
+						<th align="left" onClick={() => toggleSorting("rating")} className="nowrap">
+							Rating <i className={getIcon("rating")}/>
 						</th>
-						<th align="left" onClick={() => toggleSorting('species')} className="nowrap">
-							Species <i className={getIcon('species')}/>
+						<th align="left" onClick={() => toggleSorting("species")} className="nowrap">
+							Species <i className={getIcon("species")}/>
 						</th>
-						<th align="left" onClick={() => toggleSorting('description')} className="nowrap">
-							Description <i className={getIcon('description')}/>
+						<th align="left" onClick={() => toggleSorting("description")} className="nowrap">
+							Description <i className={getIcon("description")}/>
 						</th>
-						<th align="left" onClick={() => toggleSorting('createdAt')} className="nowrap">
-							Created At <i className={getIcon('createdAt')}/>
+						<th align="left" onClick={() => toggleSorting("createdAt")} className="nowrap">
+							Created At <i className={getIcon("createdAt")}/>
 						</th>
 					</tr>
 					</thead>

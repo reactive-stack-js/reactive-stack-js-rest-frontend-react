@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React from 'react';
+import React from "react";
 
 import PreviewVersionsRow from "./Row.js";
 import {useSelector} from "react-redux";

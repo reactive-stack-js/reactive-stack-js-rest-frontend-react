@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 import _ from "lodash";
 
 export default function Menu() {
 
-	let pathname = _.replace(window.location.pathname, '/', '');
+	let pathname = _.replace(window.location.pathname, "/", "");
 
 	if (_.isEmpty(pathname)) {
 		return (
@@ -13,7 +13,7 @@ export default function Menu() {
 		);
 	}
 
-	if ('about' === pathname) {
+	if ("about" === pathname) {
 		return (
 			<div className="vertical-center">
 				<a href="/">Lorems</a>

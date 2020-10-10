@@ -1,10 +1,10 @@
-import {isError, isFSA} from 'flux-standard-action';
+import {isError, isFSA} from "flux-standard-action";
 import {
 	SET_LOREMS,
 	SET_LOREMS_TOTAL_COUNT,
 	SET_SELECTED_LOREM,
 	SET_SELECTED_LOREM_VERSIONS
-} from '../actions/lorems';
+} from "../actions/lorems";
 
 export default function (state = [], action) {
 	if (!isFSA(action)) return state;

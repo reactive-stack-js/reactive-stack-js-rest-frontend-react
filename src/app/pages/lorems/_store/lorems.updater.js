@@ -13,18 +13,18 @@ import {filter} from "rxjs/operators";
 import ClientSocket from "../../../../util/client.socket";
 
 export default class LoremsUpdater {
-	static _SECTIONS = ['lorems', 'selected', 'selectedVersions'];
+	static _SECTIONS = ["lorems", "selected", "selectedVersions"];
 
 	destroy() {
 		this._subscription.unsubscribe();
 		this._subscription = null;
-		console.log('LoremsUpdater destroyed.');
+		console.log("LoremsUpdater destroyed.");
 	}
 
 	constructor() {
 		this._init()
-			.then(() => console.log('LoremsUpdater initialized.'))
-			.catch((err) => console.error('LoremsUpdater initialization error', err));
+			.then(() => console.log("LoremsUpdater initialized."))
+			.catch((err) => console.error("LoremsUpdater initialization error", err));
 	}
 
 	_subscription;
@@ -34,12 +34,12 @@ export default class LoremsUpdater {
 		this._subscription = clientSocket
 			.pipe(filter((message) => {
 				let {type, path} = message;
-				return 'update' === type && _.includes(LoremsUpdater._SECTIONS, path);
+				return "update" === type && _.includes(LoremsUpdater._SECTIONS, path);
 			}))
 			.subscribe({
 				next: (message) => this._process(message),
-				error: (err) => console.log('error', err),
-				complete: () => console.log('completed')
+				error: (err) => console.log("error", err),
+				complete: () => console.log("completed")
 			});
 	}
 
@@ -47,16 +47,16 @@ export default class LoremsUpdater {
 		let {path, payload} = message;
 
 		switch (path) {
-			case 'lorems':
+			case "lorems":
 				store.dispatch(setLorems(payload.lorems));
 				store.dispatch(setLoremsTotalCount(payload._loremsCount));
 				break;
 
-			case 'selected':
+			case "selected":
 				store.dispatch(setSelectedLorem(payload.selected));
 				break;
 
-			case 'selectedVersions':
+			case "selectedVersions":
 				store.dispatch(setSelectedLoremVersions(payload.selectedVersions));
 				break;
 

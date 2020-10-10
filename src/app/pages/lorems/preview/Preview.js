@@ -1,31 +1,31 @@
 import _ from "lodash";
 import moment from "moment";
 
-import React from 'react';
+import React from "react";
 import {useHistory} from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 
-import './Preview.css';
+import "./Preview.css";
 
-import AuthService from '../../../../util/auth.service';
+import AuthService from "../../../../util/auth.service";
 import PreviewVersions from "./versions/Versions.js";
 
 const Preview = () => {
 	const history = useHistory();
 
 	const _editLorem = async (lorem) => {
-		const response = await fetch('/api/lorem/draft/' + lorem._id, {
-			method: 'GET',
+		const response = await fetch("/api/lorem/draft/" + lorem._id, {
+			method: "GET",
 			headers: AuthService.getAuthHeader()
 		});
 		const draftId = await response.json();
-		history.push('/lorem/' + draftId);
+		history.push("/lorem/" + draftId);
 	};
 
 	const store = useSelector(store => store);
 
 	let selected = store.lorems.selected;
-	if (_.isEmpty(selected)) return ('');
+	if (_.isEmpty(selected)) return ("");
 
 	return (
 		<div id="lorems-preview-component">
@@ -40,7 +40,7 @@ const Preview = () => {
 				<p><label className="preview-label">Email:</label> {selected.email}</p>
 				<p><label className="preview-label">Rating:</label> {selected.rating}</p>
 				<p><label className="preview-label">Spieces:</label> {selected.species}</p>
-				<p><label className="preview-label">Created&nbsp;At:</label> {moment(selected.createdAt).format('YYYY/MM/DD HH:mm:ss')}</p>
+				<p><label className="preview-label">Created&nbsp;At:</label> {moment(selected.createdAt).format("YYYY/MM/DD HH:mm:ss")}</p>
 				<p><label className="preview-label">Description:</label></p>
 				<div>{selected.description}<br/>&nbsp;</div>
 			</div>

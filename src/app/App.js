@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {Route, Switch, withRouter} from 'react-router-dom';
+import React, {Component} from "react";
+import {Route, Switch, withRouter} from "react-router-dom";
 
-import AuthService from '../util/auth.service';
+import AuthService from "../util/auth.service";
 
 import Header from "./pages/header/Header";
 import Social from "./pages/login/Social";
-import Logout from './pages/logout/Logout';
+import Logout from "./pages/logout/Logout";
 import About from "./pages/about/About";
 import Lorems from "./pages/lorems/Lorems";
 import Lorem from "./pages/lorem/Lorem";
@@ -13,8 +13,8 @@ import Lorem from "./pages/lorem/Lorem";
 class App extends Component {
 	state = {
 		user: {},
-		jwt: '',
-		activeItem: '/',
+		jwt: "",
+		activeItem: "/",
 	};
 
 	async componentDidMount() {

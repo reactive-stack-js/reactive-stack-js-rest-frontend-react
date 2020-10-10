@@ -1,16 +1,16 @@
-import _ from 'lodash';
+import _ from "lodash";
 
 import ClientSocket from "../../../../util/client.socket";
 
 const _initialConfig = () => ({
 	page: 1,
 	pageSize: 10,
-	search: '',
+	search: "",
 	sort: {createdAt: -1}
 });
 
-const STRING_COLUMNS = ['firstname', 'lastname', 'email', 'description'];
-const NUMBER_COLUMNS = ['iteration', 'rating'];
+const STRING_COLUMNS = ["firstname", "lastname", "email", "description"];
+const NUMBER_COLUMNS = ["iteration", "rating"];
 
 const loremsConfigUpdate = (config) => {
 	if (!config) config = _initialConfig();
@@ -40,10 +40,10 @@ const loremsConfigUpdate = (config) => {
 	}
 
 	ClientSocket.send({
-		type: 'subscribe',
-		target: 'lorems',
-		observe: 'lorems',
-		scope: 'many',
+		type: "subscribe",
+		target: "lorems",
+		observe: "lorems",
+		scope: "many",
 		config: {
 			query,
 			sort: config.sort,

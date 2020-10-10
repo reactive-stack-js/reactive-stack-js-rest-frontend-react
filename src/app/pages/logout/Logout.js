@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom';
+import React, {Component} from "react";
+import {withRouter} from "react-router-dom";
 
-import AuthService from '../../../util/auth.service';
+import AuthService from "../../../util/auth.service";
 
 class Logout extends Component {
 
 	componentDidMount() {
 		AuthService.logout();
 		setTimeout(() => {
-			this.props.history.push('/');
+			this.props.history.push("/");
 			window.location.reload();
 		}, 1000);
 	}

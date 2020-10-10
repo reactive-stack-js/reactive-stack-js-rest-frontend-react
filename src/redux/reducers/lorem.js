@@ -1,5 +1,5 @@
-import {isError, isFSA} from 'flux-standard-action';
-import {SET_LOREM} from '../actions/lorem';
+import {isError, isFSA} from "flux-standard-action";
+import {SET_LOREM} from "../actions/lorem";
 
 export default function (state = [], action) {
 	if (!isFSA(action)) return state;

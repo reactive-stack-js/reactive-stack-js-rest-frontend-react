@@ -1,9 +1,9 @@
-import React from 'react';
-import './Header.css';
+import React from "react";
+import "./Header.css";
 
-import Title from './Title';
-import Menu from './Menu';
-import User from './User';
+import Title from "./Title";
+import Menu from "./Menu";
+import User from "./User";
 
 export default function Header() {
 	return (
