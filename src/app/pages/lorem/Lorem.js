@@ -17,7 +17,6 @@ import loremConfigUpdate from "./_store/_f.lorem.config.update";
 // let INITIAL;
 // const _cleanDiff = (diff) => _.omit(diff, [
 // 	'_id', 'isLatest',
-// 	'isDraft', 'isDraft__added',
 // 	'meta', 'meta__added',
 // 	'updatedAt', 'updatedAt__added',
 // 	'updatedBy', 'updatedBy__added'
@@ -57,7 +56,6 @@ const Lorem = (params) => {
 
 	let lorem = store.lorem;
 	if (!lorem) {
-		// || !lorem.isDraft) {
 		// history.push('');
 		return ('...I got nothing...');
 	}
