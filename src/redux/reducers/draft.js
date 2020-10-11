@@ -1,5 +1,5 @@
 import {isError, isFSA} from "flux-standard-action";
-import {SET_LOREM} from "../actions/lorem";
+import {SET_DRAFT} from "../actions/draft";
 
 export default function (state = [], action) {
 	if (!isFSA(action)) return state;
@@ -9,7 +9,7 @@ export default function (state = [], action) {
 	}
 
 	switch (action.type) {
-		case SET_LOREM:
+		case SET_DRAFT:
 			return action.payload;
 
 		default:

@@ -7,8 +7,8 @@ const loremConfigUpdate = (config) => {
 
 	ClientSocket.send({
 		type: "subscribe",
-		target: "lorem",
-		observe: "lorems",
+		target: "draft",
+		observe: "drafts",
 		scope: "one",
 		config: {
 			query: config

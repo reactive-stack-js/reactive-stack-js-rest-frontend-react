@@ -11,8 +11,9 @@ import ClientSocket from "../../../_reactivestack/client.socket";
 import "./Lorem.css";
 
 import LoremUpdater from "./_store/lorem.updater";
-import {setLorem} from "../../../redux/actions/all";
+import {setDraft} from "../../../redux/actions/all";
 import loremConfigUpdate from "./_store/_f.lorem.config.update";
+import {sendFetchGet, sendFetchPost} from "../../../_reactivestack/_f.send.fetch";
 
 // let INITIAL;
 // const _cleanDiff = (diff) => _.omit(diff, [
@@ -33,7 +34,7 @@ const Lorem = (params) => {
 			await ClientSocket.location();
 			if (AuthService.loggedIn()) {
 				updater = new LoremUpdater();
-				loremConfigUpdate({_id: params.match.params.loremId});
+				loremConfigUpdate({_id: params.match.params.draftId});
 			}
 		};
 		init();
@@ -54,15 +55,15 @@ const Lorem = (params) => {
 		)
 	}
 
-	let lorem = store.lorem;
-	if (!lorem) {
+	let draft = store.draft;
+	if (!draft || !_.get(draft, 'document', false)) {
 		// history.push("");
-		return ("...I got nothing...");
+		return (<p>...I got nothing...</p>);
 	}
 
 	const isDisabled = (fieldName) => {
-		if (lorem) {
-			let meta = lorem.meta;
+		if (draft) {
+			let meta = draft.meta;
 			if (meta) {
 				let field = _.get(meta, fieldName);
 				if (field) {
@@ -76,52 +77,29 @@ const Lorem = (params) => {
 
 	const onFocus = async (field) => {
 		if (isDisabled(field)) return;
-		fetch("/api/draft/focus/" + lorem._id, {
-			method: "POST",
-			headers: AuthService.getAuthHeader(),
-			body: JSON.stringify({field})
-		});
+		sendFetchPost("/api/draft/focus/" + draft._id, {field});
 	}
 
 	const onBlur = async (field) => {
-		fetch("/api/draft/blur/" + lorem._id, {
-			method: "POST",
-			headers: AuthService.getAuthHeader(),
-			body: JSON.stringify({field})
-		});
+		sendFetchPost("/api/draft/blur/" + draft._id, {field});
 	}
 
 	const onChange = async (value, field) => {
-		_.set(lorem, field, value);
-		dispatch(setLorem(_.cloneDeep(lorem)));
-
-		fetch("/api/draft/change/" + lorem._id, {
-			method: "POST",
-			headers: AuthService.getAuthHeader(),
-			body: JSON.stringify({value, field})
-		});
+		_.set(draft.document, field, value);
+		dispatch(setDraft(_.cloneDeep(draft)));
+		sendFetchPost("/api/draft/change/" + draft._id, {value, field});
 	}
 
 	const closeDialog = async () => {
-		const response = await fetch("/api/draft/cancel/" + lorem._id, {
-			method: "POST",
-			headers: AuthService.getAuthHeader(),
-			body: JSON.stringify({})
-		});
-		const completed = await response.json();
-		if (completed) history.push("");
-		else console.error(" - closeDialog response", completed);  	// oops...
+		await sendFetchGet("/api/draft/cancel/" + draft._id);
+		// TODO: remove this and observe the data change!
+		history.push("");
 	};
 
 	const saveLorem = async () => {
-		const response = await fetch("/api/draft/save/", {
-			method: "POST",
-			headers: AuthService.getAuthHeader(),
-			body: JSON.stringify({document: lorem})
-		});
-		const completed = await response.json();
-		if (completed) history.push("");
-		else console.error(" - saveLorem response", completed);	// oops...
+		await sendFetchGet("/api/draft/save/" + draft._id);
+		// TODO: remove this and observe the data change!
+		history.push("");
 	};
 
 	const renderSelectOptions = () => {
@@ -131,7 +109,7 @@ const Lorem = (params) => {
 	}
 
 	const renderUpdatedAt = () => {
-		let updatedAt = _.get(lorem, "updatedAt");
+		let updatedAt = _.get(draft, "updatedAt");
 		if (!updatedAt) return ("");
 		return (<span><br/>Last update at <b>{moment(updatedAt).format("YYYY/MM/DD HH:mm:ss")}</b>.</span>);
 	}
@@ -145,22 +123,22 @@ const Lorem = (params) => {
 						<tr>
 							<td width="60" className="editorRow"><label>Name:</label></td>
 							<td style={{whiteSpace: "nowrap"}}>
-								<input className="editorField" type="text" value={lorem.firstname || ""} disabled={isDisabled("firstname")} onFocus={() => onFocus("firstname")} onBlur={() => onBlur("firstname")} onChange={(e) => onChange(e.target.value, "firstname")}/>
+								<input className="editorField" type="text" value={draft.document.firstname || ""} disabled={isDisabled("firstname")} onFocus={() => onFocus("firstname")} onBlur={() => onBlur("firstname")} onChange={(e) => onChange(e.target.value, "firstname")}/>
 								&nbsp;
-								<input className="editorField" type="text" value={lorem.lastname || ""} disabled={isDisabled("lastname")} onFocus={() => onFocus("lastname")} onBlur={() => onBlur("lastname")} onChange={(e) => onChange(e.target.value, "lastname")}/>
+								<input className="editorField" type="text" value={draft.document.lastname || ""} disabled={isDisabled("lastname")} onFocus={() => onFocus("lastname")} onBlur={() => onBlur("lastname")} onChange={(e) => onChange(e.target.value, "lastname")}/>
 							</td>
 						</tr>
 						<tr>
 							<td className="editorRow"><label>E-mail:</label></td>
 							<td>
-								<input className="editorField" type="text" value={lorem.email || ""} disabled={isDisabled("email")} onFocus={() => onFocus("email")} onBlur={() => onBlur("email")} onChange={(e) => onChange(e.target.value, "email")}/>
+								<input className="editorField" type="text" value={draft.document.email || ""} disabled={isDisabled("email")} onFocus={() => onFocus("email")} onBlur={() => onBlur("email")} onChange={(e) => onChange(e.target.value, "email")}/>
 							</td>
 						</tr>
 						<tr>
-							<td className="editorRow"><label>Species:</label>{lorem.species}</td>
+							<td className="editorRow"><label>Species:</label>{draft.document.species}</td>
 							<td>
 								<select className="editorField"
-										value={lorem.species}
+										value={draft.document.species}
 										disabled={isDisabled("species")}
 										onFocus={() => onFocus("species")}
 										onBlur={() => onBlur("species")}
@@ -172,7 +150,7 @@ const Lorem = (params) => {
 						<tr>
 							<td className="editorRow"><label>Rating:</label></td>
 							<td>
-								<input className="editorField" type="number" value={lorem.rating || 0} disabled={isDisabled("rating")} onFocus={() => onFocus("rating")} onBlur={() => onBlur("rating")} onChange={(e) => onChange(e.target.value, "rating")}/>
+								<input className="editorField" type="number" value={draft.document.rating || 0} disabled={isDisabled("rating")} onFocus={() => onFocus("rating")} onBlur={() => onBlur("rating")} onChange={(e) => onChange(e.target.value, "rating")}/>
 							</td>
 						</tr>
 						<tr>
@@ -182,7 +160,7 @@ const Lorem = (params) => {
 										width: "413px",
 										height: "150px"
 									}}
-											  value={lorem.description || ""}
+											  value={draft.document.description || ""}
 											  disabled={isDisabled("description")}
 											  onFocus={() => onFocus("description")}
 											  onBlur={() => onBlur("description")}
@@ -197,11 +175,11 @@ const Lorem = (params) => {
 			<div id="lorem-meta">
 				<p align="right">
 					Draft created on
-					<b>{moment(lorem.createdAt).format("YYYY/MM/DD HH:mm:ss")}</b>
+					<b>{moment(draft.document.createdAt).format("YYYY/MM/DD HH:mm:ss")}</b>
 					&nbsp;
 					using
-					<b>version {lorem.iteration}</b> of <b>{lorem.username}</b>.
-					{renderUpdatedAt(lorem)}
+					<b>version {draft.document.iteration}</b> of <b>{draft.document.username}</b>.
+					{renderUpdatedAt(draft)}
 				</p>
 			</div>
 

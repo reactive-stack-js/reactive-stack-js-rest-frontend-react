@@ -13,7 +13,7 @@ const Preview = () => {
 	const history = useHistory();
 
 	const _editLorem = async (lorem) => {
-		const draftId = sendFetchGet("/api/draft/create/lorems/" + lorem._id);
+		const draftId = await sendFetchGet("/api/draft/create/lorems/" + lorem._id);
 		history.push("/lorem/" + draftId);
 	};
 

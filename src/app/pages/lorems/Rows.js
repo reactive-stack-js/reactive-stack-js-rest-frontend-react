@@ -9,7 +9,6 @@ import ClientSocket from "../../../_reactivestack/client.socket";
 import {setSelectedLorem, setSelectedLoremVersions} from "../../../redux/actions/all";
 
 const _selectRow = (selected, lorem) => {
-	let config = {};
 	if (selected && lorem.itemId === selected.itemId) {
 		store.dispatch(setSelectedLorem({}));
 		store.dispatch(setSelectedLoremVersions([]));

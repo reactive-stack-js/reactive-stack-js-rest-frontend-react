@@ -1,7 +1,7 @@
 import {filter} from "rxjs/operators";
 
 import store from "../../../../redux/store";
-import {setLorem} from "../../../../redux/actions/all";
+import {setDraft} from "../../../../redux/actions/all";
 
 import ClientSocket from "../../../../_reactivestack/client.socket";
 
@@ -25,7 +25,7 @@ export default class LoremUpdater {
 		this._subscription = clientSocket
 			.pipe(filter((message) => {
 				let {type, path} = message;
-				return "update" === type && "lorem" === path;
+				return "update" === type && "draft" === path;
 			}))
 			.subscribe({
 				next: (message) => this._process(message),
@@ -38,8 +38,8 @@ export default class LoremUpdater {
 		let {path, payload} = message;
 
 		switch (path) {
-			case "lorem":
-				store.dispatch(setLorem(payload.lorem));
+			case "draft":
+				store.dispatch(setDraft(payload.draft));
 				break;
 
 			default:

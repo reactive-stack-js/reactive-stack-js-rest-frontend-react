@@ -36,7 +36,7 @@ class App extends Component {
 					{/* A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. */}
 					<Switch>
 						<Route path="/about"><About/></Route>
-						<Route path="/lorem/:loremId"><Lorem/></Route>
+						<Route path="/lorem/:draftId"><Lorem/></Route>
 
 						<Route path="/logout"><Logout/></Route>
 						<Route path="/login/facebook"><Social/></Route>

@@ -10,6 +10,13 @@ import LoremsRows from "./Rows";
 import Preview from "./preview/Preview";
 import ClientSocket from "../../../_reactivestack/client.socket";
 import LoremsUpdater from "./_store/lorems.updater";
+import store from "../../../redux/store";
+import {setSelectedLorem, setSelectedLoremVersions} from "../../../redux/actions/lorems";
+
+const _resetSelected = () => {
+	store.dispatch(setSelectedLorem({}));
+	store.dispatch(setSelectedLoremVersions([]));
+}
 
 const MIN_PAGE_SIZE = 5;
 const MAX_PAGE_SIZE = 25;
@@ -39,24 +46,32 @@ const Lorems = () => {
 	const [search, _setSearch] = useState("");
 	const [sort, _setSort] = useState({createdAt: -1});
 
+	const store = useSelector(store => store);
+	let totalCount = store.lorems.totalCount || 0;
+	let pageCount = parseInt(totalCount / pageSize, 10) + 1;
+
 	const setPage = (page) => {
 		_setPage(page);
 		loremsConfigUpdate({page, pageSize, search, sort});
+		_resetSelected();
 	};
 
 	const setPageSize = (pageSize) => {
 		_setPageSize(pageSize);
 		loremsConfigUpdate({page, pageSize, search, sort});
+		_resetSelected();
 	};
 
 	const setSearch = (search) => {
 		_setSearch(search);
 		loremsConfigUpdate({page, pageSize, search, sort});
+		_resetSelected();
 	};
 
 	const setSort = (sort) => {
 		_setSort(sort);
 		loremsConfigUpdate({page, pageSize, search, sort});
+		_resetSelected();
 	};
 
 	const _toggleSortingHelper = (sorting, label) => {
@@ -99,10 +114,6 @@ const Lorems = () => {
 		}
 		return "";
 	};
-
-	const store = useSelector(store => store);
-	let totalCount = store.lorems.totalCount || 0;
-	let pageCount = parseInt(totalCount / pageSize, 10) + 1;
 
 	if (!AuthService.loggedIn()) {
 		return (
