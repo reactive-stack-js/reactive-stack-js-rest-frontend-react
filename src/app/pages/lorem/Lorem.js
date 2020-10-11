@@ -76,7 +76,7 @@ const Lorem = (params) => {
 
 	const onFocus = async (field) => {
 		if (isDisabled(field)) return;
-		fetch("/api/lorem/focus/" + lorem._id, {
+		fetch("/api/draft/focus/" + lorem._id, {
 			method: "POST",
 			headers: AuthService.getAuthHeader(),
 			body: JSON.stringify({field})
@@ -84,7 +84,7 @@ const Lorem = (params) => {
 	}
 
 	const onBlur = async (field) => {
-		fetch("/api/lorem/blur/" + lorem._id, {
+		fetch("/api/draft/blur/" + lorem._id, {
 			method: "POST",
 			headers: AuthService.getAuthHeader(),
 			body: JSON.stringify({field})
@@ -95,7 +95,7 @@ const Lorem = (params) => {
 		_.set(lorem, field, value);
 		dispatch(setLorem(_.cloneDeep(lorem)));
 
-		fetch("/api/lorem/change/" + lorem._id, {
+		fetch("/api/draft/change/" + lorem._id, {
 			method: "POST",
 			headers: AuthService.getAuthHeader(),
 			body: JSON.stringify({value, field})
@@ -103,7 +103,7 @@ const Lorem = (params) => {
 	}
 
 	const closeDialog = async () => {
-		const response = await fetch("/api/lorem/cancel/" + lorem._id, {
+		const response = await fetch("/api/draft/cancel/" + lorem._id, {
 			method: "POST",
 			headers: AuthService.getAuthHeader(),
 			body: JSON.stringify({})
@@ -114,7 +114,7 @@ const Lorem = (params) => {
 	};
 
 	const saveLorem = async () => {
-		const response = await fetch("/api/lorem/save/", {
+		const response = await fetch("/api/draft/save/", {
 			method: "POST",
 			headers: AuthService.getAuthHeader(),
 			body: JSON.stringify({document: lorem})

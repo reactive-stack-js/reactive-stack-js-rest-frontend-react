@@ -6,19 +6,14 @@ import {useHistory} from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 
 import "./Preview.css";
-
-import AuthService from "../../../../util/auth.service";
 import PreviewVersions from "./versions/Versions.js";
+import {sendFetchGet} from "@/_reactivestack/_f.send.fetch";
 
 const Preview = () => {
 	const history = useHistory();
 
 	const _editLorem = async (lorem) => {
-		const response = await fetch("/api/lorem/draft/" + lorem._id, {
-			method: "GET",
-			headers: AuthService.getAuthHeader()
-		});
-		const draftId = await response.json();
+		const draftId = sendFetchGet("/api/draft/create/lorems/" + lorem._id);
 		history.push("/lorem/" + draftId);
 	};
 
