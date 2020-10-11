@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Route, Switch, withRouter} from "react-router-dom";
 
-import AuthService from "../util/auth.service";
+import AuthService from "../_reactivestack/auth.service";
 
 import Header from "./pages/header/Header";
 import Social from "./pages/login/Social";

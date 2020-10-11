@@ -1,5 +1,5 @@
-/* eslint-disable no-debugger */
-import ClientSocket from "@/_reactivestack/client.socket";
+import {BehaviorSubject} from "rxjs";
+import ClientSocket from "./client.socket";
 
 const DEFAULT_USER_INFO = {user: {}, jwt: ""};
 
@@ -8,34 +8,36 @@ const _getLocalStorageUserInfo = () => {
 	return userInfo ? JSON.parse(userInfo) : DEFAULT_USER_INFO;
 };
 
-class AuthService {
-	_user = {};
-	_jwt = "";
+class AuthService extends BehaviorSubject {
+	state = {
+		user: {},
+		jwt: "",
+	};
 
 	constructor() {
+		super();
 		this.checkLocalStorage();
 	}
 
-	user() {
-		return this._user;
+	userId() {
+		return this.state.user.id;
 	}
 
-	userId() {
-		return this._user.id;
+	user() {
+		return this.state.user;
 	}
 
 	jwt() {
-		return this._jwt;
+		return this.state.jwt;
 	}
 
 	loggedIn() {
-		return !!this._user.id;
+		return !!this.state.user.id;
 	}
 
 	sendState(state) {
-		let {user, jwt} = state;
-		this._user = user;
-		this._jwt = jwt;
+		this.state = state;
+		this.next(state);
 	}
 
 	checkLocalStorage() {

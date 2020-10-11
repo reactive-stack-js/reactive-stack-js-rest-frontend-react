@@ -4,7 +4,7 @@ import {Link, withRouter} from "react-router-dom";
 import {Button, Icon} from "semantic-ui-react";
 
 import "./User.css";
-import AuthService from "../../../util/auth.service";
+import AuthService from "../../../_reactivestack/auth.service";
 
 class User extends Component {
 

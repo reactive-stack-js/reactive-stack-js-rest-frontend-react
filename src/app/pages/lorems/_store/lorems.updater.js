@@ -10,7 +10,7 @@ import {
 import _ from "lodash";
 import {filter} from "rxjs/operators";
 
-import ClientSocket from "../../../../util/client.socket";
+import ClientSocket from "../../../../_reactivestack/client.socket";
 
 export default class LoremsUpdater {
 	static _SECTIONS = ["lorems", "selected", "selectedVersions"];

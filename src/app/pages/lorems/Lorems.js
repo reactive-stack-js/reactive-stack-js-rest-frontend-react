@@ -2,13 +2,13 @@ import _ from "lodash";
 import React, {useState, useEffect} from "react";
 import {connect, useSelector} from "react-redux";
 
-import AuthService from "../../../util/auth.service";
+import AuthService from "../../../_reactivestack/auth.service";
 import loremsConfigUpdate from "./_store/_f.lorems.config.update";
 
 import "./Lorems.css";
 import LoremsRows from "./Rows";
 import Preview from "./preview/Preview";
-import ClientSocket from "../../../util/client.socket";
+import ClientSocket from "../../../_reactivestack/client.socket";
 import LoremsUpdater from "./_store/lorems.updater";
 
 const MIN_PAGE_SIZE = 5;

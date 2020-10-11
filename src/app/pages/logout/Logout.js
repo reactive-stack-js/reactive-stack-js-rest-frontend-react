@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 
-import AuthService from "../../../util/auth.service";
+import AuthService from "../../../_reactivestack/auth.service";
 
 class Logout extends Component {
 

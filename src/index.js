@@ -2,7 +2,7 @@ import React from "react";
 import {render} from "react-dom";
 import {Provider} from "react-redux";
 import {BrowserRouter as Router} from "react-router-dom";
-import * as serviceWorker from "./util/service.worker";
+import * as serviceWorker from "./service.worker";
 
 import App from "./app/App";
 import store from "./redux/store";
@@ -13,7 +13,7 @@ render(
 			<App/>
 		</Router>
 	</Provider>,
-	document.body,
+	document.getElementById("rest-react-app"),
 );
 
 // If you want your app to work offline and load faster, you can change unregister() to register() below.

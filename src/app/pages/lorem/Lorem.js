@@ -5,8 +5,8 @@ import {connect, useSelector, useDispatch} from "react-redux";
 import _ from "lodash";
 import moment from "moment";
 
-import AuthService from "../../../util/auth.service";
-import ClientSocket from "../../../util/client.socket";
+import AuthService from "../../../_reactivestack/auth.service";
+import ClientSocket from "../../../_reactivestack/client.socket";
 
 import "./Lorem.css";
 

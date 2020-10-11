@@ -5,7 +5,7 @@ import React from "react";
 import {useSelector} from "react-redux";
 
 import store from "../../../redux/store";
-import ClientSocket from "../../../util/client.socket";
+import ClientSocket from "../../../_reactivestack/client.socket";
 import {setSelectedLorem, setSelectedLoremVersions} from "../../../redux/actions/all";
 
 const _selectRow = (selected, lorem) => {

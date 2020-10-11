@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import ClientSocket from "../../../../util/client.socket";
+import ClientSocket from "../../../../_reactivestack/client.socket";
 
 const _initialConfig = () => ({
 	page: 1,

@@ -7,7 +7,7 @@ import "fomantic-ui-css/semantic.css";
 import {v4 as uuidv4} from "uuid";
 import queryString from "query-string";
 
-import AuthService from "../../../util/auth.service";
+import AuthService from "../../../_reactivestack/auth.service";
 
 const API = process.env.REACT_APP_API_PATH;
 const FB_APP_ID = process.env.REACT_APP_FB_APP_ID;

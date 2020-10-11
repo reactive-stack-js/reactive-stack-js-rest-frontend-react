@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 
 import store from "../../../../../redux/store";
 import {setSelectedLorem} from "../../../../../redux/actions/all";
-import ClientSocket from "../../../../../util/client.socket";
+import ClientSocket from "../../../../../_reactivestack/client.socket";
 
 const _selectRow = (lorem) => {
 	store.dispatch(setSelectedLorem(lorem));   // optimistic update !!!

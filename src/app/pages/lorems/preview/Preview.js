@@ -7,7 +7,7 @@ import {connect, useSelector} from "react-redux";
 
 import "./Preview.css";
 import PreviewVersions from "./versions/Versions.js";
-import {sendFetchGet} from "@/_reactivestack/_f.send.fetch";
+import {sendFetchGet} from "../../../../_reactivestack/_f.send.fetch";
 
 const Preview = () => {
 	const history = useHistory();
