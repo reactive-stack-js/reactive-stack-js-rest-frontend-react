@@ -30,8 +30,9 @@ export default class ClientSocket extends Subject {
 
 	static _onOpen = async (e) => {
 		console.log("[WS] Connection open.");
-		await ClientSocket.register(e.target);
-		await ClientSocket.location();
+		ClientSocket._socket = e.target;
+		// await ClientSocket.register(e.target);
+		await ClientSocket.location(_path());
 
 		_.each(this._queue, ClientSocket.send);
 		this._queue = [];
@@ -40,13 +41,14 @@ export default class ClientSocket extends Subject {
 	static _onMessage = async (e) => {
 		let {data: message} = e;
 		message = JSON.parse(message);
-		// console.log("[WS] Message received from server:", ClientSocket._socket.id, _.omit(message, "payload"));
-		console.log("[WS] Server message:", ClientSocket._socket.id, message.type, message.path, message.payload);
+		// console.log("[WS] Message received from server:", ClientSocket._socket.id, _.omit(message, "payload"), AuthService.loggedIn());
+		console.log("[WS] Server message:", AuthService.loggedIn(), ClientSocket._socket.id, message.type, message.path, message.payload);
 
 		let {payload} = message;
 		switch (message.type) {
 			case "socketId":
 				ClientSocket._socket.id = message.socketId;
+				await ClientSocket.register();
 				return;
 
 			case "refresh":
@@ -94,25 +96,20 @@ export default class ClientSocket extends Subject {
 			return;
 		}
 
-		console.log("\n - sending", message);
-		ClientSocket._instance.next(message);
-
 		message = _.isString(message) ? message : JSON.stringify(message);
 		return ClientSocket._socket.send(message);
 	}
 
-	static async location() {
+	static async location(path) {
 		if (!ClientSocket._instance) {
 			ClientSocket._instance = new ClientSocket();
 			await ClientSocket._connect();
 		}
 
-		let path = _path();
-		let message = {
+		ClientSocket.send({
 			type: "location",
 			path: path
-		};
-		ClientSocket.send(message);
+		});
 	}
 
 }

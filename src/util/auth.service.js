@@ -1,4 +1,5 @@
-import {BehaviorSubject} from "rxjs";
+/* eslint-disable no-debugger */
+import ClientSocket from "@/_reactivestack/client.socket";
 
 const DEFAULT_USER_INFO = {user: {}, jwt: ""};
 
@@ -7,32 +8,34 @@ const _getLocalStorageUserInfo = () => {
 	return userInfo ? JSON.parse(userInfo) : DEFAULT_USER_INFO;
 };
 
-class AuthService extends BehaviorSubject {
-	state = {
-		user: {},
-		jwt: "",
-	};
+class AuthService {
+	_user = {};
+	_jwt = "";
 
 	constructor() {
-		super();
 		this.checkLocalStorage();
 	}
 
 	user() {
-		return this.state.user;
+		return this._user;
+	}
+
+	userId() {
+		return this._user.id;
 	}
 
 	jwt() {
-		return this.state.jwt;
+		return this._jwt;
 	}
 
 	loggedIn() {
-		return !!this.state.user.id;
+		return !!this._user.id;
 	}
 
 	sendState(state) {
-		this.state = state;
-		this.next(state);
+		let {user, jwt} = state;
+		this._user = user;
+		this._jwt = jwt;
 	}
 
 	checkLocalStorage() {
@@ -46,6 +49,7 @@ class AuthService extends BehaviorSubject {
 	}
 
 	refresh({user, jwt}) {
+		console.log("[Auth] refresh:", {user, jwt});
 		if (!!user && !!jwt) {
 			localStorage.setItem("userInfo", JSON.stringify({user, jwt}));
 			this.sendState({user, jwt});
@@ -55,15 +59,18 @@ class AuthService extends BehaviorSubject {
 	}
 
 	login(user, jwt) {
+		console.log("[Auth] login:", {user, jwt});
 		if (!!user && !!jwt) {
 			localStorage.setItem("userInfo", JSON.stringify({user, jwt}));
 			this.sendState({user, jwt});
+			ClientSocket.register();
 		} else {
 			this.logout();
 		}
 	}
 
 	logout() {
+		console.log("[Auth] logout.");
 		localStorage.removeItem("userInfo");
 		this.sendState(DEFAULT_USER_INFO);
 	}
