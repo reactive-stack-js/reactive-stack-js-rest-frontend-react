@@ -5,8 +5,7 @@ const _initialConfig = () => ({_id: null});
 const loremConfigUpdate = (config) => {
 	if (!config) config = _initialConfig();
 
-	ClientSocket.send({
-		type: "subscribe",
+	ClientSocket.sendSubscribe({
 		target: "draft",
 		observe: "drafts",
 		scope: "one",
