@@ -13,15 +13,14 @@ const _selectRow = (selected, lorem) => {
 		store.dispatch(setSelectedLorem({}));
 		store.dispatch(setSelectedLoremVersions([]));
 
-		ClientSocket.send({type: "unsubscribe", target: "selected"});
-		ClientSocket.send({type: "unsubscribe", target: "selectedVersions"});
+		ClientSocket.sendUnsubscribe({target: "selected"});
+		ClientSocket.sendUnsubscribe({target: "selectedVersions"});
 
 	} else {
 		store.dispatch(setSelectedLorem(lorem));				// optimistic update
 		store.dispatch(setSelectedLoremVersions([]));	// cleanup
 
-		ClientSocket.send({
-			type: "subscribe",
+		ClientSocket.sendSubscribe({
 			target: "selected",
 			observe: "lorems",
 			scope: "one",
@@ -33,8 +32,7 @@ const _selectRow = (selected, lorem) => {
 			}
 		});
 
-		ClientSocket.send({
-			type: "subscribe",
+		ClientSocket.sendSubscribe({
 			target: "selectedVersions",
 			observe: "lorems",
 			scope: "many",

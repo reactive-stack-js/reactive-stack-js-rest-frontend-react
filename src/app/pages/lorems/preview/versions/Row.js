@@ -11,8 +11,7 @@ import ClientSocket from "../../../../../_reactivestack/client.socket";
 const _selectRow = (lorem) => {
 	store.dispatch(setSelectedLorem(lorem));   // optimistic update !!!
 
-	ClientSocket.send({
-		type: "subscribe",
+	ClientSocket.sendSubscribe({
 		target: "selected",
 		observe: "lorems",
 		scope: "one",

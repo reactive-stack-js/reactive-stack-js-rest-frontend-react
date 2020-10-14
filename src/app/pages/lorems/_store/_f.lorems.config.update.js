@@ -39,8 +39,7 @@ const loremsConfigUpdate = (config) => {
 		};
 	}
 
-	ClientSocket.send({
-		type: "subscribe",
+	ClientSocket.sendSubscribe({
 		target: "lorems",
 		observe: "lorems",
 		scope: "many",
