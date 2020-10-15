@@ -24,8 +24,8 @@ export default class LoremUpdater {
 		let clientSocket = await ClientSocket.init();
 		this._subscription = clientSocket
 			.pipe(filter((message) => {
-				let {type, path} = message;
-				return "update" === type && "draft" === path;
+				let {type, target} = message;
+				return "update" === type && "draft" === target;
 			}))
 			.subscribe({
 				next: (message) => this._process(message),
@@ -35,9 +35,9 @@ export default class LoremUpdater {
 	}
 
 	_process(message) {
-		let {path, payload} = message;
+		let {target, payload} = message;
 
-		switch (path) {
+		switch (target) {
 			case "draft":
 				store.dispatch(setDraft(payload.draft));
 				break;

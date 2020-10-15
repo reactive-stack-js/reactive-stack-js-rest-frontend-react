@@ -12,7 +12,7 @@ import {filter} from "rxjs/operators";
 
 import ClientSocket from "../../../../_reactivestack/client.socket";
 
-const VALID_PATHS = ["lorems", "selected", "selectedVersions"];
+const VALID_TARGETS = ["lorems", "selected", "selectedVersions"];
 
 export default class LoremsUpdater {
 
@@ -34,8 +34,8 @@ export default class LoremsUpdater {
 		let clientSocket = await ClientSocket.init();
 		this._subscription = clientSocket
 			.pipe(filter((message) => {
-				let {type, path} = message;
-				return "update" === type && _.includes(VALID_PATHS, path);
+				let {type, target} = message;
+				return "update" === type && _.includes(VALID_TARGETS, target);
 			}))
 			.subscribe({
 				next: (message) => this._process(message),
@@ -45,9 +45,9 @@ export default class LoremsUpdater {
 	}
 
 	_process(message) {
-		let {path, payload} = message;
+		let {target, payload} = message;
 
-		switch (path) {
+		switch (target) {
 			case "lorems":
 				store.dispatch(setLorems(payload.lorems));
 				store.dispatch(setLoremsTotalCount(payload._loremsCount));
