@@ -6,7 +6,7 @@ import ReconnectingWebSocket from "reconnecting-websocket";
 import uuidv4 from "./_f.uuidv4";
 import AuthService from "./auth.service";
 
-dotenv.config();
+dotenv.config({path: ".env.local"});
 const WS_URI = process.env.REACT_APP_WS_URI;
 
 const _path = () => {
