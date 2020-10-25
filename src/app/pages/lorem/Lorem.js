@@ -13,7 +13,7 @@ import "./Lorem.css";
 import LoremUpdater from "./_store/lorem.updater";
 import {setDraft} from "../../../redux/actions/all";
 import loremConfigUpdate from "./_store/_f.lorem.config.update";
-import {sendFetchGet, sendFetchPost} from "../../../_reactivestack/_f.send.fetch";
+import {sendGet, sendPost} from "../../../_reactivestack/_f.send.fetch";
 
 // let INITIAL;
 // const _cleanDiff = (diff) => _.omit(diff, [
@@ -77,27 +77,27 @@ const Lorem = (params) => {
 
 	const onFocus = async (field) => {
 		if (isDisabled(field)) return;
-		sendFetchPost("/api/draft/focus/" + draft._id, {field});
+		sendPost("/api/draft/focus/" + draft._id, {field});
 	}
 
 	const onBlur = async (field) => {
-		sendFetchPost("/api/draft/blur/" + draft._id, {field});
+		sendPost("/api/draft/blur/" + draft._id, {field});
 	}
 
 	const onChange = async (value, field) => {
 		_.set(draft.document, field, value);
 		dispatch(setDraft(_.cloneDeep(draft)));
-		sendFetchPost("/api/draft/change/" + draft._id, {value, field});
+		sendPost("/api/draft/change/" + draft._id, {value, field});
 	}
 
 	const closeDialog = async () => {
-		await sendFetchGet("/api/draft/cancel/" + draft._id);
+		await sendGet("/api/draft/cancel/" + draft._id);
 		// TODO: remove this and observe the data change!
 		history.push("");
 	};
 
 	const saveLorem = async () => {
-		await sendFetchGet("/api/draft/save/" + draft._id);
+		await sendGet("/api/draft/save/" + draft._id);
 		// TODO: remove this and observe the data change!
 		history.push("");
 	};

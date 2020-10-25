@@ -7,13 +7,13 @@ import {connect, useSelector} from "react-redux";
 
 import "./Preview.css";
 import PreviewVersions from "./versions/Versions.js";
-import {sendFetchGet} from "../../../../_reactivestack/_f.send.fetch";
+import {sendGet} from "../../../../_reactivestack/_f.send.fetch";
 
 const Preview = () => {
 	const history = useHistory();
 
 	const _editLorem = async (lorem) => {
-		const draftId = await sendFetchGet("/api/draft/create/lorems/" + lorem._id);
+		const draftId = await sendGet("/api/draft/create/lorems/" + lorem._id);
 		history.push("/lorem/" + draftId);
 	};
 

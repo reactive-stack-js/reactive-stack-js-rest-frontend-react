@@ -1,9 +1,9 @@
 import _ from "lodash";
+import {v4 as uuidv4} from "uuid";
 import {Subject} from "rxjs";
 import * as dotenv from "dotenv";
 import ReconnectingWebSocket from "reconnecting-websocket";
 
-import uuidv4 from "./_f.uuidv4";
 import AuthService from "./auth.service";
 
 dotenv.config({path: ".env.local"});
