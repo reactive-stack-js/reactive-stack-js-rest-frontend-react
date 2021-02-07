@@ -6,7 +6,7 @@
 		"node": ">=12"
 	},
 	"author": "Predrag Stojadinovic <predrag@stojadinovic.net>",
-	"proxy": "http://localhost:3003",
+	"proxy": "http://localhost:3007",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
